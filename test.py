@@ -1,3 +1,5 @@
+from colored_list import ColoredList
+from numpy.lib.function_base import blackman
 from face_embedder import *
 import time
 # from keras.models import load_model
@@ -14,24 +16,25 @@ def time(fun):
 
 
 fe = Face_Embedder()
-def embed_from_file(filename):
+def face_from_file(filename):
     global fe
     img = cv2.imread(filename)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    return fe.extract_and_get_embed(img)
+    return fe.extract_face(img)
 
 
-embed_will_1 = embed_from_file("will_smith_1.jpg")
-embed_will_2 = embed_from_file("will_smith_2.jpg")
-embed_3 = embed_from_file("face.jpg")
-embed_anthony = embed_from_file("anthony.jpg")
+# face_will_1 = face_from_file("will_smith_1.jpg")
+face_will_1 = Face_Embedder.extract_face_from_file("will_smith_1.jpg")
+face_will_2 = Face_Embedder.extract_face_from_file("will_smith_2.jpg")
+face_3 = Face_Embedder.extract_face_from_file("face.jpg")
+face_anthony = Face_Embedder.extract_face_from_file("anthony.jpg")
 
+blist = ColoredList()
 
+blist.add_face(face_will_1)
+blist.add_face(face_anthony)
+blist.add_face(face_3)
 
+ans = blist.search(face_will_2)
 
-for dist in [euclidean, cosine]:
-    print(dist(embed_will_1, embed_will_2))
-    print(dist(embed_will_1, embed_anthony))
-    print(dist(embed_will_1, embed_3))
-    print(dist(embed_3, embed_will_2))
-    print("******************************")
+# print(ans)
