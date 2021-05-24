@@ -1,5 +1,5 @@
 from colored_list import ColoredList
-from numpy.lib.function_base import blackman
+import numpy as np
 from face_embedder import *
 import time
 # from keras.models import load_model
@@ -15,17 +15,15 @@ def time(fun):
     print("*********************************")
 
 
-fe = Face_Embedder()
 def face_from_file(filename):
-    global fe
     img = cv2.imread(filename)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    return fe.extract_face(img)
+    return Face_Embedder.extract_face_from_mat(img)
 
 
 # face_will_1 = face_from_file("will_smith_1.jpg")
-face_will_1 = Face_Embedder.extract_face_from_file("will_smith_1.jpg")
+face_will_1 = face_from_file("will_smith_1.jpg")
 face_will_2 = Face_Embedder.extract_face_from_file("will_smith_2.jpg")
+face_will_3 = Face_Embedder.extract_face_from_file("will_smith_3.jpg")
 face_3 = Face_Embedder.extract_face_from_file("face.jpg")
 face_anthony = Face_Embedder.extract_face_from_file("anthony.jpg")
 
@@ -35,6 +33,15 @@ blist.add_face(face_will_1)
 blist.add_face(face_anthony)
 blist.add_face(face_3)
 
-ans = blist.search(face_will_2)
+
+# print("**************************************************************")
+print(blist.search(face_will_2))
+print(blist.search(face_will_3))
+print(blist.search(face_3))
+# face2 = Face_Embedder.extract_face(fun2("will_smith_1.jpg"))
+# print(face1.embed)
+# print(face2.embed)
+# print(np.array_equal(face2.embed, face1.embed))
+
 
 # print(ans)
