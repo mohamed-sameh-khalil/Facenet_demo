@@ -6,6 +6,7 @@ from mtcnn.mtcnn import MTCNN
 from keras.models import load_model
 import numpy as np
 from numpy import expand_dims
+import cv2
 # TODO to improve performance make this a class to reuse the MTCNN and the model
 
 # IMPORTANT, THIS CLASS USES A SHARED MODEL ACROSS INSTANCES AND THUS NOT THREAD SAFE
@@ -21,6 +22,10 @@ class Face_Embedder:
         pixels = asarray(image)
         return Face_Embedder.extract_face(pixels, required_size)
 
+
+    def extract_face_from_mat(img, required_size=(160, 160)) -> Face:
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        return Face_Embedder.extract_face(img, required_size)
 
     # extract a single face from a given photograph
     # can be edited to extract all faces
